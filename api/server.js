@@ -43,7 +43,7 @@ server.post(`/api/users`, async (req, res) => {
             res.status(400).json({ message: 'Please provide name and bio for the user' });
         } else {
             const newUser = await User.insert(req.body);
-            res.status(200).json(newUser);
+            res.status(201).json(newUser);
         }
     } catch {
         res.status(500).json({ message: 'There was an error while saving the user to the database' });
@@ -63,7 +63,7 @@ server.put(`/api/users/:id`, async (req, res) => {
             if(!updatedUser){
                 res.status(404).json({ message: "The user with the specified ID does not exist" });
             } else {
-                res.status(201).json(updatedUser);
+                res.status(200).json(updatedUser);
             }
         }
     } catch {
