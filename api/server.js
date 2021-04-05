@@ -34,4 +34,21 @@ server.get(`/api/users`, async (req, res) => {
     }
 });
 
+
+// [POST] - Creates new user
+server.post(`/api/users`, async (req, res) => {
+    const user = req.body;
+    try {
+        if(!user.name || !user.bio){
+            res.status(400).json({ message: 'Please provide name and bio for the user' });
+        } else {
+            const newUser = await User.insert(req.body);
+            res.status(200).json(newUser);
+        }
+    } catch {
+        res.status(500).json({ message: 'There was an error while saving the user to the database' });
+    }
+});
+
+
 module.exports = server; // EXPORT YOUR SERVER instead of {}
