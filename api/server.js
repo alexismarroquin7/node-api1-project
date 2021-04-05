@@ -71,5 +71,24 @@ server.put(`/api/users/:id`, async (req, res) => {
     }
 });
 
+// [DELETE] - Deletes user by id
+server.delete(`/api/users/:id`, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedUser = await User.remove(id);
+        if(!deletedUser){
+            res.status(404).json({ message: "The user with the specified ID does not exist" });
+        } else {
+            res.status(200).json(deletedUser);
+        }
+    } catch {
+        res.status(500).json({ message: "The user could not be removed" });
+    }
+});
+
+server.use('*', (req, res) => {
+    res.status(404).json({ message: 'Page not found' });
+});
+
 
 module.exports = server; // EXPORT YOUR SERVER instead of {}
