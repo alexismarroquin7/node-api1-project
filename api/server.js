@@ -22,4 +22,16 @@ server.get('/api/users/:id', async (req, res) => {
     }
 });
 
+
+// [GET] All users
+server.get(`/api/users`, async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+
+    } catch {
+        res.status(500).json({ message: "The users information could not be retrieved" });
+    }
+});
+
 module.exports = server; // EXPORT YOUR SERVER instead of {}
